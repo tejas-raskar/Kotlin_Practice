@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,15 +12,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 
@@ -43,28 +48,16 @@ fun AppLayout() {
         verticalArrangement = Arrangement.Center
     ) {
 
-        // Artwork Display
-        Surface(
-            modifier = Modifier.padding(32.dp).padding(top = 32.dp, bottom = 32.dp),
-            shadowElevation = 20.dp,
-        ) {
-            Image(
-                painter = painterResource(R.drawable.artwork),
-                contentDescription = null,
-                modifier = Modifier.padding(32.dp)
-            )
-        }
+        ArtworkDisplay(R.drawable.artwork)
 
-        //Artist Display Section
-        Column(
-            modifier = Modifier.padding(bottom = 32.dp)
-        ) {
-            Text(text = "Name of the Artwork")
-            Text(text = "Artist Name (Year)")
-        }
+        ArtworkNameAndArtist(artworkName = "The Girl", artistName = "Artist", year = 1924)
 
+        //Prev and Next Buttons
         Row(
-            modifier = Modifier.fillMaxWidth().padding(32.dp).wrapContentHeight(Alignment.Bottom),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(40.dp)
+                .wrapContentHeight(Alignment.Bottom),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             Button(onClick = {}) {
@@ -77,6 +70,54 @@ fun AppLayout() {
     }
 }
 
+// Artwork Display
+@Composable
+fun ArtworkDisplay(@DrawableRes artwork: Int) {
+
+    Surface(
+        modifier = Modifier
+            .padding(32.dp)
+            .padding(top = 32.dp, bottom = 32.dp),
+        shadowElevation = 20.dp,
+    ) {
+        Image(
+            painter = painterResource(artwork),
+            contentDescription = null,
+            modifier = Modifier.padding(32.dp)
+        )
+    }
+}
+
+//Artist Name
+@Composable
+fun ArtworkNameAndArtist(
+    artistName: String,
+    artworkName: String,
+    year: Int
+) {
+    Surface(
+        modifier = Modifier.padding(16.dp),
+        shape = RoundedCornerShape(10.dp),
+        color = Color.hsl(68F, 0.4F, 0.79F, 0.63F),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = artworkName,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Light
+            )
+            Text(
+                text = "$artistName($year)",
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+            )
+        }
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun ArtSpacePreview() {

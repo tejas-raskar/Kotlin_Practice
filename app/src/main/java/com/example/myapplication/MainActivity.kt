@@ -50,7 +50,7 @@ fun AppLayout() {
 
         ArtworkDisplay(R.drawable.artwork)
 
-        ArtworkNameAndArtist(artworkName = "The Girl", artistName = "Artist", year = 1924)
+        ArtworkNameAndArtist(artworkName = "Artwork", artistName = "Artist", year = 1999)
 
         //Prev and Next Buttons
         Row(
